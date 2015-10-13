@@ -22,6 +22,7 @@ set(
     segmentator.h
     misc.h
     image.h
+    pnmfile.h
 )
 
 GBIS_INSTALL_TARGET(GBIS)
