@@ -1,9 +1,11 @@
 #include <set>
+#include <cstdlib> //rand for mac
 #include "image.h"          // image
 #include "misc.h"           // rgb
 #include "segment-graph.h"  // edge
 #include "segmentator.h"
 #include "filter.h" // smooth
+//#include <math.h>
 
 using namespace std;
 
