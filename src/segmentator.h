@@ -8,7 +8,7 @@ public:
     Segmentator();
    ~Segmentator();
 
-    image<rgb> *segment(image<rgb> *source, float sigma, float k,
+    int** segment(image<rgb> *source, float sigma, float k,
                         int min_size, int *num_ccs);
 
 private:

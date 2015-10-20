@@ -1,23 +1,11 @@
 #include <set>
-#include <cstdlib> //rand for mac
 #include "image.h"          // image
 #include "misc.h"           // rgb
 #include "segment-graph.h"  // edge
 #include "segmentator.h"
 #include "filter.h" // smooth
-//#include <math.h>
 
 using namespace std;
-
-// random color
-rgb random_rgb()
-{
-    rgb c;
-    c.r = (uchar)rand();
-    c.g = (uchar)rand();
-    c.b = (uchar)rand();
-    return c;
-}
 
 // dissimilarity measure between pixels
 static inline float diff(image<float> *r, image<float> *g, image<float> *b,
@@ -35,7 +23,7 @@ Segmentator::~Segmentator()
 {
 }
 
-image<rgb>* Segmentator::segment(image<rgb> *source, float sigma, float c,
+int** Segmentator::segment(image<rgb> *source, float sigma, float c,
                                  int min_size, int *num_ccs)
 {
     int width = source->width();
@@ -112,21 +100,20 @@ image<rgb>* Segmentator::segment(image<rgb> *source, float sigma, float c,
     delete [] edges;
     *num_ccs = u->num_sets();
 
-    image<rgb> *output = new image<rgb>(width, height);
+    int** output = new int*[height];
 
-    // pick random colors for each component
-    rgb *colors = new rgb[width*height];
-    for (int i = 0; i < width*height; i++)
-      colors[i] = random_rgb();
+    //init
+    for (int y = 0; y < height; y++) {
+        output[y] = new int[width];
+    }
 
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         int comp = u->find(y * width + x);
-        imRef(output, x, y) = colors[comp];
+        output[y][x] = comp;
       }
     }
 
-    delete [] colors;
     delete u;
 
     return output;
