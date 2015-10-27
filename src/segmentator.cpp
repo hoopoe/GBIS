@@ -23,8 +23,8 @@ Segmentator::~Segmentator()
 {
 }
 
-int** Segmentator::segment(image<rgb> *source, float sigma, float c,
-                                 int min_size, int *num_ccs)
+void Segmentator::segment(image<rgb> *source, int **result,  float sigma,
+                          float c, int min_size, int *num_ccs)
 {
     int width = source->width();
     int height = source->height();
@@ -100,21 +100,12 @@ int** Segmentator::segment(image<rgb> *source, float sigma, float c,
     delete [] edges;
     *num_ccs = u->num_sets();
 
-    int** output = new int*[height];
-
-    //init
     for (int y = 0; y < height; y++) {
-        output[y] = new int[width];
-    }
-
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        int comp = u->find(y * width + x);
-        output[y][x] = comp;
-      }
+        for (int x = 0; x < width; x++) {
+            int comp = u->find(y * width + x);
+            result[y][x] = comp;
+        }
     }
 
     delete u;
-
-    return output;
 }

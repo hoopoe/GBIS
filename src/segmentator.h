@@ -8,20 +8,7 @@ public:
     Segmentator();
    ~Segmentator();
 
-    int** segment(image<rgb> *source, float sigma, float k,
+    void segment(image<rgb> *source, int **result, float sigma, float k,
                         int min_size, int *num_ccs);
 
-private:
-//    image<float> *r;
-//    image<float> *g;
-//    image<float> *b;
-//    edge *edges;
-
-//    image<rgb> *output;
-//    image<rgb> *result;
-//    image<rgb> **res;
-
-//    rgb *colors;
-//    rgb green;
-//    rgb black;
 };
